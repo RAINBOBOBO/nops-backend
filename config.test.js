@@ -18,10 +18,12 @@ describe("config can come from env", function () {
     delete process.env.BCRYPT_WORK_FACTOR;
     delete process.env.DATABASE_URL;
 
-    expect(config.getDatabaseUri()).toEqual("nops_task");
+    // expect(config.getDatabaseUri()).toEqual("nops_task");
+    expect(config.getDatabaseUri()).toEqual("postgresql://rainb:qwerty@localhost/nops_task");
     
     process.env.NODE_ENV = "test";
-    expect(config.getDatabaseUri()).toEqual("nops_task_test");
+    // expect(config.getDatabaseUri()).toEqual("nops_task_test");
+    expect(config.getDatabaseUri()).toEqual("postgresql://rainb:qwerty@localhost/nops_task_test");
   });
 })
 

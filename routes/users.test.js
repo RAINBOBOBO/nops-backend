@@ -141,21 +141,21 @@ describe("GET /users", function () {
           firstName: "U1F",
           lastName: "U1L",
           email: "user1@user.com",
-          isAdmin: false,
+          isAdmin: false
         },
         {
           username: "u2",
           firstName: "U2F",
           lastName: "U2L",
           email: "user2@user.com",
-          isAdmin: false,
+          isAdmin: false
         },
         {
           username: "u3",
           firstName: "U3F",
           lastName: "U3L",
           email: "user3@user.com",
-          isAdmin: false,
+          isAdmin: false
         },
       ],
     });
@@ -199,8 +199,7 @@ describe("GET /users/:username", function () {
         firstName: "U1F",
         lastName: "U1L",
         email: "user1@user.com",
-        isAdmin: false,
-        applications: [testJobIds[0]],
+        isAdmin: false
       },
     });
   });
@@ -215,8 +214,7 @@ describe("GET /users/:username", function () {
         firstName: "U1F",
         lastName: "U1L",
         email: "user1@user.com",
-        isAdmin: false,
-        applications: [testJobIds[0]],
+        isAdmin: false
       },
     });
   });
