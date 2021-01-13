@@ -204,6 +204,22 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
   }
+
+  /** Add favorite country code: update db, returns undefined. */
+
+  static async addFavorite(username, country_code) {
+    const preCheck = await db.query(
+      `SELECT username
+       FROM users
+       WHERE username = $1`, [username]);
+    const user = preCheck.rows[0];
+
+    if (!user) throw new NotFoundError(`No username: ${username}`);
+
+    await db.query(
+      `INSERT INTO favorites (username, country_code)
+       VALUES ($1, $2)`, [username, country_code]);
+  }
 }
 
 

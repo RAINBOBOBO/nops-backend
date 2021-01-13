@@ -13,3 +13,14 @@ VALUES ('testuser',
         'Admin',
         'rain@email.com',
         TRUE);
+
+INSERT INTO favorites (username, country_code)
+VALUES (testuser, AUS),
+       (testuser, EGY),
+       (testuser, JPN),
+       (testuser, GUM),
+       (testadmin, JAM),
+       (testadmin, MLT),
+       (testadmin, ZAF),
+       (testadmin, SLB),
+       (testadmin, VUT);
