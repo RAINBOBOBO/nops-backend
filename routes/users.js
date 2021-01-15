@@ -126,11 +126,11 @@ router.delete("/:username", ensureCorrectUserOrAdmin, async function (req, res, 
  *  Authorization required: admin or same-user-as-:username
 */
 
-router.post("/:username/favorites/:countryCode", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.post("/:username/favorites", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
-    const countryCode = +req.params.countryCode;
+    const countryCode = +req.body.countryCode;
     const username = +req.params.username;
-    await User.addFavorite(username, countryCode);
+    await User.addFavorite({username, countryCode});
     return res.json({ favorited: countryCode });
   } catch (err) {
     return next(err);

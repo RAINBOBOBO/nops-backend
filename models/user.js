@@ -207,7 +207,7 @@ class User {
 
   /** Add favorite country code: update db, returns undefined. */
 
-  static async addFavorite(username, country_code) {
+  static async addFavorite({username, country_code}) {
     const preCheck = await db.query(
       `SELECT username
        FROM users
