@@ -205,9 +205,25 @@ class User {
     if (!user) throw new NotFoundError(`No user: ${username}`);
   }
 
+  /** Get favorite country codes for a given user 
+   * 
+   *  Returns { countryCodes }
+   *    where countryCodes is [code, ...]
+  */
+  static async getFavorites(username) {
+    const favoriteRes = await db.query(
+      `SELECT f.country_code
+       FROM favorites AS f
+       WHERE f.username = $1`, [username]);
+
+    const favorites = favoriteRes.rows.map(code => ({"alpha3Code": code["country_code"]}));
+
+    return favorites;
+  }
+
   /** Add favorite country code: update db, returns undefined. */
 
-  static async addFavorite({username, country_code}) {
+  static async addFavorite(username, country_code) {
     const preCheck = await db.query(
       `SELECT username
        FROM users

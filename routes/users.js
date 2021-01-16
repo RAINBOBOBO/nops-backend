@@ -119,6 +119,27 @@ router.delete("/:username", ensureCorrectUserOrAdmin, async function (req, res, 
   }
 });
 
+
+/** GET /[username]/favorites
+ *
+ * Returns { countryCodes }
+ *   where countryCodes is [code, ...]
+ *
+ * Authorization required: admin or same user-as-:username
+ **/
+
+router.get("/:username/favorites", ensureCorrectUserOrAdmin, async function (req, res, next) {
+  try {
+    const username = req.params.username;
+    const favorites = await User.getFavorites(username);
+    console.log("inside route", favorites);
+    return res.json({ favorites });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
 /** POST /[username]/favorites/[countryCode]
  * 
  *  Returns {"favorited": countryCode}
@@ -128,14 +149,15 @@ router.delete("/:username", ensureCorrectUserOrAdmin, async function (req, res, 
 
 router.post("/:username/favorites", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
-    const countryCode = +req.body.countryCode;
-    const username = +req.params.username;
-    await User.addFavorite({username, countryCode});
+    const countryCode = req.body.countryCode;
+    const username = req.params.username;
+    await User.addFavorite(username, countryCode);
     return res.json({ favorited: countryCode });
   } catch (err) {
     return next(err);
   }
 });
+
 
 
 module.exports = router;

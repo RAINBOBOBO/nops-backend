@@ -13,7 +13,7 @@ const PORT = +process.env.PORT || 3001;
 function getDatabaseUri() {
   return (process.env.NODE_ENV === "test")
       ? "postgresql://rainb:qwerty@localhost/nops_task_test"
-      : process.env.DATABASE_URL || "postgresql://rainb:qwerty@localhost/nops_task";
+      : "postgresql://rainb:qwerty@localhost/nops_task";
   // IF ON WINDOWS, COMMENT BELOW, IF ON MAC, COMMENT ABOVE
   // return (process.env.NODE_ENV === "test")
   //     ? "nops_task_test"
@@ -24,6 +24,9 @@ function getDatabaseUri() {
 //
 // Evaluate in mid-late 2021 if this should be increased to 13 for non-test use
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
+
+// for re-seeding sql server:
+// >psql nops_task < nops-backend.sql
 
 console.log("Config:".green);
 console.log("SECRET_KEY:".yellow, SECRET_KEY);
