@@ -214,7 +214,8 @@ class User {
     const favoriteRes = await db.query(
       `SELECT f.country_code
        FROM favorites AS f
-       WHERE f.username = $1`, [username]);
+       WHERE f.username = $1`, [username],
+    );
 
     const favorites = favoriteRes.rows.map(code => ({"alpha3Code": code["country_code"]}));
 
@@ -227,14 +228,33 @@ class User {
     const preCheck = await db.query(
       `SELECT username
        FROM users
-       WHERE username = $1`, [username]);
+       WHERE username = $1`, [username],
+    );
     const user = preCheck.rows[0];
 
     if (!user) throw new NotFoundError(`No username: ${username}`);
 
     await db.query(
       `INSERT INTO favorites (username, country_code)
-       VALUES ($1, $2)`, [username, country_code]);
+       VALUES ($1, $2)`, [username, country_code],
+    );
+  }
+
+  /** Delete favorite country code; returns undefined */
+
+  static async removeFavorite(username, country_code) {
+    let result = await db.query(
+      `DELETE
+      FROM favorites
+      WHERE username = $1 AND country_code = $2
+      RETURNING username, country_code AS countryCode`, 
+      [username, country_code],
+    );
+    const user = result.rows[0];
+    const countryCode = result.rows[1];
+
+    if (!user) throw new NotFoundError(`No username: ${username}`);
+    if (!countryCode) throw new NotFoundError(`No countryCode: ${countryCode}`);
   }
 }
 

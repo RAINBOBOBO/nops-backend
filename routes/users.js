@@ -140,7 +140,7 @@ router.get("/:username/favorites", ensureCorrectUserOrAdmin, async function (req
 });
 
 
-/** POST /[username]/favorites/[countryCode]
+/** POST /[username]/favorites
  * 
  *  Returns {"favorited": countryCode}
  * 
@@ -153,6 +153,22 @@ router.post("/:username/favorites", ensureCorrectUserOrAdmin, async function (re
     const username = req.params.username;
     await User.addFavorite(username, countryCode);
     return res.json({ favorited: countryCode });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
+/** DELETE /[username]/favorites/[countryCode] =>  { deleted: username }
+ * 
+ *  Authorization required: admin or same-user-as-:username
+*/
+router.delete("/:username/favorites", ensureCorrectUserOrAdmin, async function (req, res, next) {
+  try {
+    const countryCode = req.body.countryCode;
+    const username = req.params.username;
+    await User.removeFavorite(username, countryCode);
+    return res.json({ deleted: countryCode });
   } catch (err) {
     return next(err);
   }
