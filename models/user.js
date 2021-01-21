@@ -250,8 +250,8 @@ class User {
       RETURNING username, country_code AS countryCode`, 
       [username, country_code],
     );
-    const user = result.rows[0];
-    const countryCode = result.rows[1];
+    const user = result.rows[0].username;
+    const countryCode = result.rows[0].countrycode;
 
     if (!user) throw new NotFoundError(`No username: ${username}`);
     if (!countryCode) throw new NotFoundError(`No countryCode: ${countryCode}`);
