@@ -20,8 +20,8 @@ app.use(express.json());
 app.use(morgan("tiny"));
 app.use(authenticateJWT);
 
-app.use("/auth", authRoutes);
-app.use("/users", usersRoutes);
+app.use("auth", authRoutes);
+app.use("users", usersRoutes);
 
 
 /** Handle 404 errors -- this matches everything */
