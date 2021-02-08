@@ -15,7 +15,7 @@ const morgan = require("morgan");
 
 const app = express();
 
-app.use(cors({origin: false}));
+app.use(cors({origin: true}));
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(authenticateJWT);
