@@ -23,6 +23,7 @@ class User {
 
   static async authenticate(username, password) {
     // try to find the user first
+    console.log("made it to authenticate in user model", username, password);
     const result = await db.query(
           `SELECT username,
                   password,
@@ -36,6 +37,7 @@ class User {
     );
 
     const user = result.rows[0];
+    console.log("user is", user, result.rows);
 
     if (user) {
       // compare hashed password to a new hash from password
