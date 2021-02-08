@@ -13,7 +13,7 @@ const PORT = +process.env.PORT || 3001;
 function getDatabaseUri() {
   return (process.env.NODE_ENV === "test")
       ? "postgresql://rainb:qwerty@localhost/nops_task_test"
-      : "postgresql://rainb:qwerty@localhost/nops_task";
+      : process.env.DATABASE_URL || "postgresql://rainb:qwerty@localhost/nops_task";
   // IF ON WINDOWS, COMMENT BELOW, IF ON MAC, COMMENT ABOVE
   // return (process.env.NODE_ENV === "test")
   //     ? "nops_task_test"
