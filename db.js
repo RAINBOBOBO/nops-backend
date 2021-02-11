@@ -4,11 +4,17 @@
 
 const { Client } = require("pg");
 const { getDatabaseUri } = require("./config");
+const { ExpressError } = require("./expressError");
 
 const db = new Client({
   connectionString: getDatabaseUri(),
 });
 
-db.connect();
+try {
+  db.connect();
+  console.log("Successfully connected to db.");
+} catch (err) {
+  throw new ExpressError("Failed to connect to db:" + err)
+}
 
 module.exports = db;
