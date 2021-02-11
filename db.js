@@ -14,7 +14,7 @@ try {
   db.connect();
   console.log("Successfully connected to db.");
 } catch (err) {
-  throw new ExpressError("Failed to connect to db:" + err)
+  throw new Error("Failed to connect to db:" + err)
 }
 
 module.exports = db;
