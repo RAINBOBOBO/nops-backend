@@ -11,6 +11,8 @@ const { createToken } = require("../helpers/tokens");
 const userAuthSchema = require("../schemas/userAuth.json");
 const userRegisterSchema = require("../schemas/userRegister.json");
 const { BadRequestError } = require("../expressError");
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 /** POST /auth/token:  { username, password } => { token }
  *
@@ -60,6 +62,15 @@ router.post("/register", async function (req, res, next) {
     const newUser = await User.register({ ...req.body, isAdmin: false });
     const token = createToken(newUser);
     return res.status(201).json({ token });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post("/google", async function (req, res, next) {
+  console.log("made it to /google route");
+  try {
+    
   } catch (err) {
     return next(err);
   }
