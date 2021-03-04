@@ -12,6 +12,7 @@ const userAuthSchema = require("../schemas/userAuth.json");
 const userRegisterSchema = require("../schemas/userRegister.json");
 const { BadRequestError } = require("../expressError");
 const { OAuth2Client } = require('google-auth-library');
+const db = require("../db");
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 /** POST /auth/token:  { username, password } => { token }
@@ -70,7 +71,15 @@ router.post("/register", async function (req, res, next) {
 router.post("/google", async function (req, res, next) {
   console.log("made it to /google route");
   try {
-    
+    const token = req.body;
+
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID
+    });
+    const { name, email } = ticket.getPayload();
+
+    const user = await User.
   } catch (err) {
     return next(err);
   }
